@@ -1,5 +1,4 @@
 // src/pages/UploadPage.js
-// hello world
 import React from "react";
 import { useParams } from "react-router-dom";
 import UploadForm from "../components/UploadForm";
