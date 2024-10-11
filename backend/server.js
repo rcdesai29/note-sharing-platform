@@ -19,10 +19,12 @@ app.use(cors()); // Enable CORS for all routes
 // Import your routes
 const noteRoutes = require('./routes/noteRoutes');   // Notes routes
 const classRoutes = require('./routes/classRoutes'); // Classes routes
+const userRoutes = require('./routes/userRoutes'); // User routes
 
 // Use your routes
 app.use('/api/notes', noteRoutes);    // For notes
 app.use('/api/classes', classRoutes); // For classes
+app.use('/api/users', userRoutes); // For Users
 
 // Example base route 
 app.get('/', (req, res) => {

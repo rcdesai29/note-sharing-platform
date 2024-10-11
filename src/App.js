@@ -6,8 +6,11 @@ import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import ClassPage from "./pages/ClassPage";
 import UploadPage from "./pages/UploadPage";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
 import styled from "styled-components";
 import { colors } from "./theme";
+
 
 const AppContainer = styled.div`
   background-color: ${colors.background};
@@ -21,6 +24,7 @@ const Content = styled.main`
   padding: 20px;
 `;
 
+
 function App() {
   return (
     <Router>
@@ -31,6 +35,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/class/:id" element={<ClassPage />} />
             <Route path="/upload/:id" element={<UploadPage />} />
+            <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/Login" element={<Login />} />
           </Routes>
         </Content>
         <Footer />
