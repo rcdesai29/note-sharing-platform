@@ -10,6 +10,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import styled from "styled-components";
 import { colors } from "./theme";
+import Navbar from "./components/Navbar";
 
 
 const AppContainer = styled.div`
@@ -30,6 +31,7 @@ function App() {
     <Router>
       <AppContainer>
         <Header />
+        <Navbar></Navbar>
         <Content>
           <Routes>
             <Route path="/" element={<HomePage />} />

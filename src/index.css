@@ -13,6 +13,33 @@ code {
 }
 
 
+/*Navbar*/
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(162, 224, 162);
+}
+
+nav li {
+  float: right;
+}
+
+nav li a {
+  display: block;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav li a:hover {
+  background-color: rgb(139, 212, 139);
+}
+
+
+
 /*SignUp/Login Form stuff*/
 label, input {
   display: block;

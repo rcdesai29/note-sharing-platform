@@ -1,32 +1,16 @@
-import { useState } from 'react'
-
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    console.log(email, password)
-  }
 
   return(
-    <form className="login" onSubmit={handleSubmit}>
+    <form method = "POST" action = "/api/users/login">
       <h3>Login</h3>
 
-      <label>Email</label>
-      <input
-        type = "email"
-        onChange = {(e) => setEmail(e.target.value)}
-        value = {email}
-      />
-      <label>Password</label>
-      <input
-        type = "password"
-        onChange = {(e) => setPassword(e.target.value)}
-        value = {password}
-      />
+        <label for = "email">Email: </label>
+        <input type = "text" id = "email" name = "email" required />
+        <label for = "password">Password: </label>
+        <input type = "password" id = "password" name = "password" minlength="8" maxlength="64" required />
 
-      <button>Login</button>
+        <input type = "submit" value = "Submit"/>
     </form>
   )
 }
