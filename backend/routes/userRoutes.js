@@ -1,12 +1,12 @@
 const express = require('express');
 const bcrypt = require("bcrypt");
-const User = require('../models/User')
+const User = require('../models/User');
 
 
-const router = express.Router();
+const userRouter = express.Router();
 
   
-router.post('/api/users', async (req, res) => {
+userRouter.post('/api/users', async (req, res) => {
     try {
         const { username, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -20,7 +20,7 @@ router.post('/api/users', async (req, res) => {
 });
 
 
-router.post('/api/users/login', async (req, res) => {
+userRouter.post('/api/users/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({email});
@@ -35,4 +35,4 @@ router.post('/api/users/login', async (req, res) => {
 });
 
 
-module.exports = router
+module.exports = userRouter;
