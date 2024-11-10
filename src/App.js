@@ -12,7 +12,6 @@ import styled from "styled-components";
 import { colors } from "./theme";
 import Navbar from "./components/Navbar";
 
-
 const AppContainer = styled.div`
   background-color: ${colors.background};
   min-height: 100vh;
@@ -24,7 +23,6 @@ const Content = styled.main`
   flex: 1;
   padding: 20px;
 `;
-
 
 function App() {
   return (
