@@ -16,8 +16,8 @@ function ClassList({ classes }) {
   return (
     <List>
       {classes.map((cls) => (
-        <ListItem key={cls.id}>
-          <Link to={`/class/${cls.id}`}>{cls.name}</Link>
+        <ListItem key={cls._id}>
+          <Link to={`/class/${cls._id}`}>{cls.name}</Link>
         </ListItem>
       ))}
     </List>
