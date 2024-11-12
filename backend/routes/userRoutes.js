@@ -35,4 +35,58 @@ userRouter.post('/api/users/login', async (req, res) => {
 });
 
 
+userRouter.post('/:id/follow', async (req, res) => {
+    try {
+        const userToFollow = await User.findById(req.params.id);
+        const currentUser = await User.findById(req.body.userId);
+
+        if (!userToFollow || !currentUser) {
+            return res.status(404).send("User not found");
+        }
+
+        if (!userToFollow.followers.includes(currentUser._id)) {
+            userToFollow.followers.push(currentUser._id);
+            currentUser.following.push(userToFollow._id);
+
+            await userToFollow.save();
+            await currentUser.save();
+
+            res.status(200).send("User followed successfully");
+        } else {
+            res.status(400).send("You are already following this user");
+        }
+    } catch (error) {
+        res.status(500).send("Error following user");
+    }
+});
+
+userRouter.post('/:id/unfollow', async (req, res) => {
+    try {
+        const userToUnfollow = await User.findById(req.params.id);
+        const currentUser = await User.findById(req.body.userId);
+
+        if (!userToUnfollow || !currentUser) {
+            return res.status(404).send("User not found");
+        }
+
+        if (userToUnfollow.followers.includes(currentUser._id)) {
+            userToUnfollow.followers = userToUnfollow.followers.filter(
+                (id) => !id.equals(currentUser._id)
+            );
+            currentUser.following = currentUser.following.filter(
+                (id) => !id.equals(userToUnfollow._id)
+            );
+
+            await userToUnfollow.save();
+            await currentUser.save();
+
+            res.status(200).send("User unfollowed successfully");
+        } else {
+            res.status(400).send("You are not following this user");
+        }
+    } catch (error) {
+        res.status(500).send("Error unfollowing user");
+    }
+});
+
 module.exports = userRouter;

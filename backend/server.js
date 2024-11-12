@@ -1,7 +1,8 @@
+// server.js
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-const cors = require("cors"); // Import CORS middleware
+const cors = require("cors"); 
 const multer = require("multer");
 
 dotenv.config();
@@ -15,20 +16,20 @@ const app = express();
 app.use(express.json());
 
 // Use CORS middleware
-app.use(cors()); // Enable CORS for all routes
+app.use(cors()); 
 
 // Serve static files from the 'public' directory
 app.use("/public", express.static("public"));
 
 // Import your routes
-const noteRoutes = require("./routes/noteRoutes"); // Notes routes
-const classRoutes = require("./routes/classRoutes"); // Classes routes
-const userRoutes = require("./routes/userRoutes"); // User routes
+const noteRoutes = require("./routes/noteRoutes");
+const classRoutes = require("./routes/classRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 // Use your routes
-app.use("/api/notes", noteRoutes); // For notes
-app.use("/api/classes", classRoutes); // For classes
-app.use("/api/users", userRoutes); // For users
+app.use("/api/notes", noteRoutes);
+app.use("/api/classes", classRoutes);
+app.use("/api/users", userRoutes);
 
 // Example base route
 app.get("/", (req, res) => {
