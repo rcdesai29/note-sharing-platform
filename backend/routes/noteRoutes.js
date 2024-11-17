@@ -61,22 +61,22 @@ router.get("/", async (req, res) => {
 });
 
 // GET notes by class ID
-// GET notes by class ID
 router.get("/class/:classId", async (req, res) => {
   try {
     const classIdParam = req.params.classId;
+    console.log("Received request for classId:", classIdParam); // Log request
 
     // Validate classId
     if (!mongoose.Types.ObjectId.isValid(classIdParam)) {
+      console.log("Invalid classId:", classIdParam); // Log invalid classId
       return res.status(400).json({ message: "Invalid classId" });
     }
 
     const classId = new mongoose.Types.ObjectId(classIdParam);
-
-    // Debugging statement
-    console.log("Fetching notes for classId:", classId);
+    console.log("Fetching notes for classId:", classId); // Log valid classId
 
     const notes = await Note.find({ classId: classId });
+    console.log("Fetched notes:", notes); // Log fetched notes
     res.json(notes);
   } catch (err) {
     console.error("Error fetching notes by classId:", err);

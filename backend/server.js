@@ -1,11 +1,12 @@
 // server.js
-const express = require("express");
 const dotenv = require("dotenv");
+dotenv.config();
+const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors"); 
 const multer = require("multer");
 
-dotenv.config();
+console.log("MONGO_URI:", process.env.MONGO_URI);
 
 // Connect to the database
 connectDB();
