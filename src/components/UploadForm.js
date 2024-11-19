@@ -23,8 +23,8 @@ const TextArea = styled.textarea`
 `;
 
 const Button = styled.button`
-  background-color: ${colors.gold};
-  color: ${colors.text};
+  background-color: #085434; /* Updated color */
+  color: #ffffff; /* Updated text color to white */
   padding: 10px;
   border: none;
   border-radius: 5px;

@@ -1,8 +1,9 @@
 // src/components/NoteCard.js
 import React from "react";
 import FollowButton from "./FollowButton";
+import Rating from "./Rating";
 
-function NoteCard({ note, currentUserId }) {
+function NoteCard({ note, currentUserId, isSignedIn, token }) {
   return (
     <div>
       <h3>{note.title}</h3>
@@ -19,6 +20,7 @@ function NoteCard({ note, currentUserId }) {
       )}
       
       <FollowButton userId={currentUserId} noteUserId={note.userId} />
+      <Rating noteId={note._id} initialRating={note.rating} initialRatingCount={note.ratingCount} isSignedIn={isSignedIn} token={token} />
     </div>
   );
 }

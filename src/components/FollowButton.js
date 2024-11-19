@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function FollowButton({ userId, noteUserId }) {
+function FollowButton({ userId, noteUserId, isSignedIn }) {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
@@ -16,10 +16,17 @@ function FollowButton({ userId, noteUserId }) {
       }
     };
 
-    checkFollowingStatus();
-  }, [userId, noteUserId]);
+    if (isSignedIn) {
+      checkFollowingStatus();
+    }
+  }, [userId, noteUserId, isSignedIn]);
 
   const handleFollowToggle = async () => {
+    if (!isSignedIn) {
+      alert("Please sign in or log in to follow users.");
+      return;
+    }
+
     try {
       if (isFollowing) {
         await axios.post(`/api/users/${userId}/unfollow`, { targetUserId: noteUserId });

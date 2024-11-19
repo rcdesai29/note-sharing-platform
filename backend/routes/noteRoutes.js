@@ -149,6 +149,31 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+// PATCH update a note's rating
+router.patch("/:id/rate", async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id);
+    if (note == null) {
+      return res.status(404).json({ message: "Cannot find note" });
+    }
+
+    const { rating } = req.body;
+    if (rating < 0 || rating > 5) {
+      return res.status(400).json({ message: "Invalid rating value" });
+    }
+
+    // Calculate new average rating
+    const totalRating = note.rating * note.ratingCount + rating;
+    note.ratingCount += 1;
+    note.rating = totalRating / note.ratingCount;
+
+    const updatedNote = await note.save();
+    res.json(updatedNote);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // DELETE a note
 router.delete("/:id", async (req, res) => {
   try {
