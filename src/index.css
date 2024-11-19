@@ -19,7 +19,7 @@ nav ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: rgb(162, 224, 162);
+  background-color: #085434; /* Updated color */
 }
 
 nav li {

@@ -1,22 +1,16 @@
 // src/components/Header.js
 import React from "react";
 import styled from "styled-components";
-import { colors } from "../theme";
 
 const HeaderContainer = styled.header`
-  background-color: ${colors.pastelGreen};
-  padding: 20px;
-`;
-
-const Title = styled.h1`
-  color: ${colors.gold};
-  margin: 0;
+  background-color: #085434; 
+  padding: 5px;
 `;
 
 function Header() {
   return (
     <HeaderContainer>
-      <Title>NoteShare</Title>
+      {/* You can add any other content here if needed */}
     </HeaderContainer>
   );
 }
