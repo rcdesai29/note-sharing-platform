@@ -6,7 +6,7 @@ const User = require('../models/User');
 const userRouter = express.Router();
 
   
-userRouter.post('/api/users', async (req, res) => {
+userRouter.post('/signup', async (req, res) => {
     try {
         const { username, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -15,12 +15,13 @@ userRouter.post('/api/users', async (req, res) => {
         await newUser.save();
         res.status(201).send('Sign Up Successful');
     } catch (error) {
+        console.error('Error Signing Up:', error);
         res.status(500).send('Error Signing Up');
     }
 });
 
 
-userRouter.post('/api/users/login', async (req, res) => {
+userRouter.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({email});

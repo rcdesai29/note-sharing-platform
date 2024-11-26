@@ -26,11 +26,13 @@ app.use("/public", express.static("public"));
 const noteRoutes = require("./routes/noteRoutes");
 const classRoutes = require("./routes/classRoutes");
 const userRoutes = require("./routes/userRoutes");
+const feedbackRoutes = require("./routes/feedbackRoutes");
 
 // Use your routes
 app.use("/api/notes", noteRoutes);
 app.use("/api/classes", classRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 // Example base route
 app.get("/", (req, res) => {

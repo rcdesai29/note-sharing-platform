@@ -52,9 +52,10 @@ const Navbar = () => {
           <Title>NoteShare</Title>
         </div>
         <NavList>
-          <NavItem><a href="./Login">Login</a></NavItem>
-          <NavItem><a href="./SignUp">Sign Up</a></NavItem>
           <NavItem><a href="../">Home</a></NavItem>
+          <NavItem><a href="./SignUp">Sign Up</a></NavItem>
+          <NavItem><a href="./Login">Login</a></NavItem>
+          <NavItem><a href="./Feedback">Feedback</a></NavItem>
         </NavList>
       </NavbarContainer>
       <SlimBar />

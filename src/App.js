@@ -8,6 +8,7 @@ import ClassPage from "./pages/ClassPage";
 import UploadPage from "./pages/UploadPage";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import Feedback from './pages/FeedbackPage';
 import styled from "styled-components";
 import { colors } from "./theme";
 import Navbar from "./components/Navbar";
@@ -37,6 +38,7 @@ function App() {
             <Route path="/upload/:id" element={<UploadPage />} />
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/Login" element={<Login />} />
+            <Route path="/Feedback" element={<Feedback />} />
           </Routes>
         </Content>
         <Footer />
