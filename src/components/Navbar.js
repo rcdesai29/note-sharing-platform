@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { AuthContext } from "../context/AuthContext"; // Import AuthContext
 
 const NavbarContainer = styled.nav`
   background-color: #085434; /* Updated color */
@@ -44,6 +45,8 @@ const SlimBar = styled.div`
 `;
 
 const Navbar = () => {
+  const { isSignedIn, signOut } = useContext(AuthContext); // Use AuthContext
+
   return (
     <>
       <NavbarContainer>
@@ -52,15 +55,24 @@ const Navbar = () => {
           <Title>NoteShare</Title>
         </div>
         <NavList>
-          <NavItem><a href="../">Home</a></NavItem>
-          <NavItem><a href="./SignUp">Sign Up</a></NavItem>
-          <NavItem><a href="./Login">Login</a></NavItem>
-          <NavItem><a href="./Feedback">Feedback</a></NavItem>
+          <NavItem><a href="/">Home</a></NavItem>
+          {isSignedIn ? (
+            <>
+              <NavItem><a href="/profile">Profile</a></NavItem>
+              <NavItem><a href="/" onClick={signOut}>Sign Out</a></NavItem>
+            </>
+          ) : (
+            <>
+              <NavItem><a href="/SignUp">Sign Up</a></NavItem>
+              <NavItem><a href="/Login">Login</a></NavItem>
+            </>
+          )}
+          <NavItem><a href="/Feedback">Feedback</a></NavItem>
         </NavList>
       </NavbarContainer>
       <SlimBar />
     </>
   );
-}
+};
 
 export default Navbar;

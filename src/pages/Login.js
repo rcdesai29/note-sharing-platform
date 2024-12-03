@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
+
   const handleLogin = async (event) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -16,6 +19,7 @@ const Login = () => {
       });
 
       if (response.ok) {
+        signIn(); // Update sign-in status
         alert('Login Successful');
       } else {
         alert('Invalid email or password');
