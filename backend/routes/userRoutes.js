@@ -27,7 +27,8 @@ userRouter.post('/login', async (req, res) => {
         const user = await User.findOne({email});
 
         if (user && (await bcrypt.compare(password, user.password))){
-            res.cookie('userToken', user._id.toString(), {httpOnly: true});
+            req.session.user = { id: user._id, username: user.username, email: user.email };
+            res.cookie('userToken', user._id.toString(), {httpOnly: true}); //I do not know if this is needed -L
             res.status(201).send('Login Successful');
         }
     } catch (error) {
@@ -87,6 +88,22 @@ userRouter.post('/:id/unfollow', async (req, res) => {
         }
     } catch (error) {
         res.status(500).send("Error unfollowing user");
+    }
+});
+
+
+
+userRouter.get('/profile', async (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).send('Unauthorized');
+    }
+
+    try {
+        const user = await User.findById(req.session.user._id);
+        res.json(user);
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+        res.status(500).send('Error fetching profile');
     }
 });
 

@@ -5,6 +5,9 @@ const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors"); 
 const multer = require("multer");
+const sess = require("express-session");
+const MongoStore = require("connect-mongo");
+const flash = require('connect-flash');
 
 console.log("MONGO_URI:", process.env.MONGO_URI);
 
@@ -21,6 +24,23 @@ app.use(cors());
 
 // Serve static files from the 'public' directory
 app.use("/public", express.static("public"));
+
+//express user sessions
+app.use(sess({
+  secret: 'ksucvxna9w8ehrpafhna09wfja',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {maxAge: 60*60*1000},
+  store: new MongoStore({mongoUrl: process.env.MONGO_URI, collectionName: 'sessions'})
+}));
+
+app.use(flash());
+app.use((req, res, next) =>{
+  res.locals.user = req.session.user||null;
+  res.locals.successMessages = req.flash('success');
+  res.locals.errorMessages = req.flash('error');
+  next();
+});
 
 // Import your routes
 const noteRoutes = require("./routes/noteRoutes");
