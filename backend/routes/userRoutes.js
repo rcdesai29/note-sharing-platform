@@ -95,16 +95,22 @@ userRouter.post('/:id/unfollow', async (req, res) => {
 
 userRouter.get('/profile', async (req, res) => {
     if (!req.session.user) {
-        return res.status(401).send('Unauthorized');
+      console.log('Unauthorized access attempt to /profile');
+      return res.status(401).send('Unauthorized');
     }
-
+  
     try {
-        const user = await User.findById(req.session.user._id);
-        res.json(user);
+      console.log('Fetching profile for user ID:', req.session.user.id);
+      const user = await User.findById(req.session.user.id);
+      if (!user) {
+        console.log('User not found');
+        return res.status(404).send('User not found');
+      }
+      res.json(user);
     } catch (error) {
-        console.error('Error fetching profile:', error);
-        res.status(500).send('Error fetching profile');
+      console.error('Error fetching profile:', error);
+      res.status(500).send('Error fetching profile');
     }
-});
+  });
 
 module.exports = userRouter;

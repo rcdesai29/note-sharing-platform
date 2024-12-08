@@ -2,14 +2,16 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
+const path = require("path");
 const connectDB = require("./config/db");
 const cors = require("cors"); 
-const multer = require("multer");
 const sess = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require('connect-flash');
+const userRouter = require("./routes/userRoutes");
 
-console.log("MONGO_URI:", process.env.MONGO_URI);
+console.log("MONGO_URI:", process.env.MONGO_URI); // Debugging line
+console.log("All Environment Variables:", process.env); // Debugging line
 
 // Connect to the database
 connectDB();
@@ -25,18 +27,18 @@ app.use(cors());
 // Serve static files from the 'public' directory
 app.use("/public", express.static("public"));
 
-//express user sessions
+// Express user sessions
 app.use(sess({
   secret: 'ksucvxna9w8ehrpafhna09wfja',
   resave: false,
   saveUninitialized: false,
   cookie: {maxAge: 60*60*1000},
-  store: new MongoStore({mongoUrl: process.env.MONGO_URI, collectionName: 'sessions'})
+  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
 }));
 
 app.use(flash());
-app.use((req, res, next) =>{
-  res.locals.user = req.session.user||null;
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
   res.locals.successMessages = req.flash('success');
   res.locals.errorMessages = req.flash('error');
   next();
@@ -45,18 +47,22 @@ app.use((req, res, next) =>{
 // Import your routes
 const noteRoutes = require("./routes/noteRoutes");
 const classRoutes = require("./routes/classRoutes");
-const userRoutes = require("./routes/userRoutes");
 const feedbackRoutes = require("./routes/feedbackRoutes");
 
 // Use your routes
 app.use("/api/notes", noteRoutes);
 app.use("/api/classes", classRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api/users", userRouter);
 app.use("/api/feedback", feedbackRoutes);
 
 // Example base route
 app.get("/", (req, res) => {
   res.send("API is running...");
+});
+
+// Fallback route to serve the frontend application
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public", "index.html"));
 });
 
 // Starting Server
