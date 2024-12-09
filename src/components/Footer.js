@@ -17,7 +17,7 @@ const Text = styled.p`
 function Footer() {
   return (
     <FooterContainer>
-      <Text>&copy; 2024 NoteShare</Text>
+      <Text>&copy; 2024 NoteLogger</Text>
     </FooterContainer>
   );
 }

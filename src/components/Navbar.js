@@ -52,7 +52,7 @@ const Navbar = () => {
       <NavbarContainer>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Logo src="/Screenshot_19-11-2024_15010_selfservice.uncc.edu.jpeg" alt="Logo" /> {/* Update the src with the path to your image */}
-          <Title>NoteShare</Title>
+          <Title>NoteLogger</Title>
         </div>
         <NavList>
           <NavItem><a href="/">Home</a></NavItem>
