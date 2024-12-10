@@ -21,15 +21,9 @@ export const AuthProvider = ({ children }) => {
   const signOut = (req, res) => {
     setIsSignedIn(false);
     localStorage.removeItem("isSignedIn");
-     // Add any additional sign-out logic here (e.g., removing cookies)
-    req.session.destroy((err) => {
-      if (err) {
-          console.error('Error destroying session:', err);
-          return res.status(500).send('Error logging out');
-      }
-      res.clearCookie('userToken'); // Clear the cookie
-      res.status(200).send('Logout Successful');
-    });
+    // Add any additional sign-out logic here (e.g., removing cookies)
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.status(200).send('Logout Successful');
   };
 
   return (

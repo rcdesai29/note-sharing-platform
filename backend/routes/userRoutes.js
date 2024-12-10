@@ -1,10 +1,25 @@
 const express = require('express');
 const bcrypt = require("bcrypt");
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 
 const userRouter = express.Router();
 
+async function issueAuthToken(user){
+    const payload = {_id: user._id, email: user.email};
+    const secret = process.env.JWT_SECRET;
+    const options = {expiresIn: '1h'};
+
+    const token = jwt.sign(payload, secret, options);
+    return token;
+}
+
+
+function issueAuthCookie(res, token){
+    const cookieOptions = {httpOnly: true, maxAge: 1000*60*60, secure: true, sameSite: 'strict'};
+    res.cookie('authToken', token, cookieOptions);
+}
   
 userRouter.post('/signup', async (req, res) => {
     try {
@@ -27,8 +42,8 @@ userRouter.post('/login', async (req, res) => {
         const user = await User.findOne({email});
 
         if (user && (await bcrypt.compare(password, user.password))){
-            req.session.user = { id: user._id, username: user.username, email: user.email };
-            res.cookie('userToken', user._id.toString(), {httpOnly: true}); //I do not know if this is needed -L
+            const authToken = await issueAuthToken(user);
+            issueAuthCookie(res, authToken);
             res.status(201).send('Login Successful');
         }
     } catch (error) {
@@ -94,23 +109,19 @@ userRouter.post('/:id/unfollow', async (req, res) => {
 
 
 userRouter.get('/profile', async (req, res) => {
-    if (!req.session.user) {
-      console.log('Unauthorized access attempt to /profile');
-      return res.status(401).send('Unauthorized');
+    const token = req.cookies.authToken;
+    if (!token) {
+        return res.status(401).send('Unauthorized');
     }
-  
+
     try {
-      console.log('Fetching profile for user ID:', req.session.user.id);
-      const user = await User.findById(req.session.user.id);
-      if (!user) {
-        console.log('User not found');
-        return res.status(404).send('User not found');
-      }
-      res.json(user);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded._id);
+        res.json(user);
     } catch (error) {
-      console.error('Error fetching profile:', error);
-      res.status(500).send('Error fetching profile');
+        console.error('Error fetching profile:', error);
+        res.status(500).send('Error fetching profile');
     }
-  });
+});
 
 module.exports = userRouter;

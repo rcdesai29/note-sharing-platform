@@ -7,7 +7,7 @@ const Feedback = () => {
     const message = event.target.message.value;
 
     try {
-      const response = await fetch('/api/feedback/submit', {
+      const response = await fetch('http://localhost:5001/api/feedback/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

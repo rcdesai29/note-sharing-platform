@@ -19,7 +19,7 @@ const Login = () => {
       });
 
       if (response.ok) {
-        signIn(); // Update sign-in status
+        signIn();
         alert('Login Successful');
       } else {
         alert('Invalid email or password');
